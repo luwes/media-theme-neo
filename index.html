@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Media Theme Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <style>
+      body {
+        min-height: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      media-theme-neo {
+        aspect-ratio: 16 / 9;
+      }
+    </style>
+    <script type="module" src="./dist/media-theme-neo.js"></script>
+  </head>
+  <body>
+    <h1>Media Theme Neo</h1>
+    <br />
+    <media-theme-neo>
+      <video
+        slot="media"
+        src="https://stream.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/high.mp4"
+        poster="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/thumbnail.jpg?time=56"
+        crossorigin
+      >
+        <track
+          label="thumbnails"
+          default
+          kind="metadata"
+          src="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/storyboard.vtt"
+        />
+        <track
+          label="English"
+          kind="captions"
+          srclang="en"
+          src="./vtt/en-cc.vtt"
+        />
+      </video>
+    </media-theme-neo>
+  </body>
+</html>
