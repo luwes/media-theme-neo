@@ -26,8 +26,8 @@
   "license": "MIT",
   "scripts": {
     "test": "web-test-runner **/*test.js --node-resolve",
-    "dev": "esbuild src/* --servedir=. --outdir=dist --bundle",
-    "build": "esbuild src/media-theme-neo.js --sourcemap --bundle --minify --outdir=dist",
+    "dev": "esbuild src/media-theme-neo.js --servedir=. --bundle --outdir=dist --loader:.svg=text --loader:.css=text",
+    "build": "esbuild src/media-theme-neo.js --bundle --outdir=dist --sourcemap  --minify --loader:.svg=text --loader:.css=text",
     "prepublishOnly": "yarn build"
   },
   "prettier": {
@@ -52,12 +52,12 @@
   "devDependencies": {
     "@open-wc/testing": "^3.0.3",
     "@web/test-runner": "^0.13.26",
-    "esbuild": "^0.14.25",
-    "eslint": "^8.10.0",
-    "prettier": "^2.5.1"
+    "esbuild": "^0.14.30",
+    "eslint": "^8.12.0",
+    "prettier": "^2.6.1"
   },
   "dependencies": {
     "@github/jtml": "^0.4.1",
-    "media-chrome": "^0.5.3"
+    "media-chrome": "^0.5.4"
   }
 }
