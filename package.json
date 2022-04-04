@@ -25,7 +25,7 @@
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "license": "MIT",
   "scripts": {
-    "test": "web-test-runner **/*test.js --node-resolve",
+    "test": "web-test-runner **/*test.js --coverage --config test/web-test-runner.config.js",
     "dev": "esbuild src/media-theme-neo.js --servedir=. --bundle --outdir=dist --loader:.svg=text --loader:.css=text",
     "build": "esbuild src/media-theme-neo.js --bundle --outdir=dist --sourcemap  --minify --loader:.svg=text --loader:.css=text",
     "prepublishOnly": "yarn build"
@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@open-wc/testing": "^3.0.3",
+    "@web/dev-server-esbuild": "^0.2.16",
     "@web/test-runner": "^0.13.26",
     "esbuild": "^0.14.30",
     "eslint": "^8.12.0",
