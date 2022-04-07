@@ -1,31 +1,43 @@
 import { MediaChromeButton, constants } from 'media-chrome';
-import { Window as window, Document as document, defineCustomElement } from './utils.js';
+import {
+  Window as window,
+  Document as document,
+  defineCustomElement,
+} from './utils.js';
 
 const { MediaUIEvents, MediaUIAttributes } = constants;
 const { MEDIA_PLAYBACK_RATE } = MediaUIAttributes;
 
-const lowIcon =
-  `<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <circle cx="12" cy="13" r="2"></circle>
-   <line x1="13.45" y1="11.55" x2="15.5" y2="9.5"></line>
-   <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
+/*
+  <media-playback-rate-range-button rates="1 1.5 2">
+*/
+
+const DEFAULT_RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
+const DEFAULT_RATE = 1;
+
+const slowIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 11.55L8.45 9.5M6.4 20a9 9 0 1111.2 0H6.4z"/>
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
+  <path stroke="currentColor" stroke-linecap="round" d="M9.505 7.5l-1.25-2.75m-1.75 5.5l-2.75-1.375m2.5 5.375l-2.875.625M14.5 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
 </svg>`;
 
-const mediumIcon =
-  `<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <circle cx="12" cy="13" r="2"></circle>
-   <line x1="13.45" y1="11.55" x2="15.5" y2="9.5"></line>
-   <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
+const normalIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.4 20a9 9 0 1111.2 0H6.4z"/>
+  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 9v4"/>
+  <path stroke="currentColor" stroke-linecap="round" d="M9.5 7.5L8.25 4.75m-1.75 5.5L3.75 8.875m2.5 5.375l-2.875.625M14.495 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
 </svg>`;
 
-const highIcon =
-  `<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <circle cx="12" cy="13" r="2"></circle>
-   <line x1="13.45" y1="11.55" x2="15.5" y2="9.5"></line>
-   <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
+const fastIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.603 13.323L15.5 9.5M6.4 20a9 9 0 1111.2 0H6.4z"/>
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
+  <path stroke="currentColor" stroke-linecap="round" d="M9.505 7.5l-1.25-2.75m-1.75 5.5l-2.75-1.375m2.5 5.375l-2.875.625M14.5 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
+</svg>`;
+
+const fasterIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12.977L17 12M6.4 20a9 9 0 1111.2 0H6.4z"/>
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
+  <path stroke="currentColor" stroke-linecap="round" d="M9.505 7.5l-1.25-2.75m-1.75 5.5l-2.75-1.375m2.5 5.375l-2.875.625M14.5 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
 </svg>`;
 
 const slotTemplate = document.createElement('template');
@@ -36,37 +48,11 @@ slotTemplate.innerHTML = `
   }
 
   /* Default to Medium slot/icon. */
-  :host(:not([${MEDIA_PLAYBACK_RATE}])) slot:not([name=medium]) > *,
-  :host(:not([${MEDIA_PLAYBACK_RATE}])) ::slotted(:not([slot=medium])),
-  :host([${MEDIA_PLAYBACK_RATE}="0.75"]) slot:not([name=medium]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="0.75"]) ::slotted(:not([slot=medium])),
-  :host([${MEDIA_PLAYBACK_RATE}="1"]) slot:not([name=medium]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="1"]) ::slotted(:not([slot=medium])),
-  :host([${MEDIA_PLAYBACK_RATE}="1.25"]) slot:not([name=medium]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="1.25"]) ::slotted(:not([slot=medium])) {
-    display: none;
-  }
-
-  :host([${MEDIA_PLAYBACK_RATE}="0.25"]) slot:not([name=low]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="0.25"]) ::slotted(:not([slot=low])),
-  :host([${MEDIA_PLAYBACK_RATE}="0.5"]) slot:not([name=low]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="0.5"]) ::slotted(:not([slot=low])) {
-    display: none;
-  }
-
-  :host([${MEDIA_PLAYBACK_RATE}="1.5"]) slot:not([name=high]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="1.5"]) ::slotted(:not([slot=high])),
-  :host([${MEDIA_PLAYBACK_RATE}="1.75"]) slot:not([name=high]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="1.75"]) ::slotted(:not([slot=high])),
-  :host([${MEDIA_PLAYBACK_RATE}="2"]) slot:not([name=high]) > *,
-  :host([${MEDIA_PLAYBACK_RATE}="2"]) ::slotted(:not([slot=high])) {
+  :host(:not([${MEDIA_PLAYBACK_RATE}])) slot:not([name="rate-1"]) > *,
+  :host(:not([${MEDIA_PLAYBACK_RATE}])) ::slotted(:not([slot="rate-1"])) {
     display: none;
   }
   </style>
-
-  <slot name="low">${lowIcon}</slot>
-  <slot name="medium">${mediumIcon}</slot>
-  <slot name="high">${highIcon}</slot>
 `;
 
 class MediaPlaybackRateRangeButton extends MediaChromeButton {
@@ -76,14 +62,56 @@ class MediaPlaybackRateRangeButton extends MediaChromeButton {
 
   constructor(options = {}) {
     super({ slotTemplate, ...options });
+
+    const sheet = this.shadowRoot.querySelector('style').sheet;
+
+    for (let i = 0; i < this.rates.length; i++) {
+      const rate = this.rates[i];
+      const css = `
+        :host([${MEDIA_PLAYBACK_RATE}="${rate}"]) slot:not([name="rate-${rate}"]) > *,
+        :host([${MEDIA_PLAYBACK_RATE}="${rate}"]) ::slotted(:not([slot="rate-${rate}"])) {
+          display: none;
+        }
+      `;
+      sheet.insertRule(css, sheet.cssRules.length);
+
+      const slot = document.createElement('slot');
+      slot.name = `rate-${rate}`;
+
+      if (rate === 1) {
+        slot.innerHTML = normalIcon;
+      } else if (rate < 1) {
+        slot.innerHTML = slowIcon;
+      } else if (rate >= 1.5) {
+        slot.innerHTML = fasterIcon;
+      } else if (rate > 1) {
+        slot.innerHTML = fastIcon;
+      }
+
+      this.shadowRoot.append(slot);
+    }
+  }
+
+  get rates() {
+    if (!this.getAttribute('rates')) return DEFAULT_RATES;
+
+    return this.getAttribute('rates')
+      .trim()
+      .split(/\s*,?\s+/)
+      .map((str) => Number(str))
+      .filter((num) => !Number.isNaN(num));
   }
 
   handleClick() {
+    const currentRate =
+      +this.getAttribute(MediaUIAttributes.MEDIA_PLAYBACK_RATE) || DEFAULT_RATE;
+    const detail =
+      this.rates.find((r) => r > currentRate) ?? this.rates[0] ?? DEFAULT_RATE;
     this.dispatchEvent(
       new window.CustomEvent(MediaUIEvents.MEDIA_PLAYBACK_RATE_REQUEST, {
         composed: true,
         bubbles: true,
-        detail: 1,
+        detail,
       })
     );
   }

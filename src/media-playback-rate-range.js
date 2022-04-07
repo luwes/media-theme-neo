@@ -3,28 +3,39 @@ import { MediaChromeRange, constants } from 'media-chrome';
 
 const { MediaUIEvents, MediaUIAttributes } = constants;
 
+/*
+  <media-playback-rate-range rates="1 1.5 2">
+*/
+
+const DEFAULT_RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
+const DEFAULT_RATE = 1;
+
 class MediaPlaybackRateRange extends MediaChromeRange {
   static get observedAttributes() {
     return [
       ...super.observedAttributes,
       MediaUIAttributes.MEDIA_PLAYBACK_RATE,
+      'rates',
     ];
   }
 
   constructor() {
     super();
 
-    this.range.step = 0.25;
-    this.range.min = 0.25;
-    this.range.max = 2;
+    this.range.step = 1;
+    this.range.min = 0;
+    this.range.max = this.rates.length - 1;
 
     this.range.addEventListener('input', () => {
-      const detail = this.range.value;
-      const evt = new window.CustomEvent(MediaUIEvents.MEDIA_PLAYBACK_RATE_REQUEST, {
-        composed: true,
-        bubbles: true,
-        detail,
-      });
+      const detail = this.rates[this.range.value];
+      const evt = new window.CustomEvent(
+        MediaUIEvents.MEDIA_PLAYBACK_RATE_REQUEST,
+        {
+          composed: true,
+          bubbles: true,
+          detail,
+        }
+      );
       this.dispatchEvent(evt);
     });
   }
@@ -35,10 +46,13 @@ class MediaPlaybackRateRange extends MediaChromeRange {
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (
-      attrName === MediaUIAttributes.MEDIA_PLAYBACK_RATE
-    ) {
-      this.range.value = +(this.getAttribute(MediaUIAttributes.MEDIA_PLAYBACK_RATE));
+    if (attrName === MediaUIAttributes.MEDIA_PLAYBACK_RATE) {
+      let newRate = +newValue;
+      if (Number.isNaN(newRate)) {
+        newRate = DEFAULT_RATE;
+      }
+
+      this.range.value = this.rates.indexOf(newRate);
       this.range.setAttribute(
         'aria-valuetext',
         this.getAttribute(MediaUIAttributes.MEDIA_PLAYBACK_RATE)
@@ -46,6 +60,16 @@ class MediaPlaybackRateRange extends MediaChromeRange {
       this.updateBar();
     }
     super.attributeChangedCallback(attrName, oldValue, newValue);
+  }
+
+  get rates() {
+    if (!this.getAttribute('rates')) return DEFAULT_RATES;
+
+    return this.getAttribute('rates')
+      .trim()
+      .split(/\s*,?\s+/)
+      .map((str) => Number(str))
+      .filter((num) => !Number.isNaN(num));
   }
 }
 
