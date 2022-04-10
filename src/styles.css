@@ -1,12 +1,19 @@
 :host {
-  --white: rgba(253, 244, 255, 1);
-  color: var(--white);
+  --neo-black: 23, 35, 34;
+  --neo-white: 253, 244, 255;
+  --neo-blue: 0, 171, 245;
+  --neo-light-blue: 168, 220, 246;
+  --neo-control-bar-height: 32px;
+  --neo-control-bar-border-radius: 2px;
+
+  --media-control-background: rgba(var(--neo-black), .75);
+  --media-control-hover-background: rgba(var(--neo-black), .75);
+  --media-icon-color: rgb(var(--neo-white));
+
+  color: rgb(var(--neo-white));
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  --media-control-background: rgba(23, 35, 35, 0.8);
-  --media-control-hover-background: rgba(23, 35, 35, 0.8);
-  --media-icon-color: var(--white);
 }
 
 media-airplay-button[media-airplay-unavailable],
@@ -22,66 +29,97 @@ media-controller {
   height: 100%;
 }
 
-media-play-button {
-  width: 90px;
+.neo-control-bar {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: end;
+  column-gap: 10px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.neo-control-bar media-play-button {
+  --media-control-background: rgba(var(--neo-blue), .75);
+  --media-control-hover-background: rgba(var(--neo-blue), .9);
+  --media-button-icon-transform: scale(150%);
+  color: rgb(var(--neo-white));
+  flex: 0 0 65px;
   aspect-ratio: 16 / 10;
-  border-radius: 6px;
-  --media-control-background: rgba(0, 171, 245, 0.75);
-  --media-control-hover-background: rgba(0, 171, 245, 0.9);
-  --media-button-icon-transform: scale(1.1);
+  border-radius: 4px;
 }
 
 media-control-bar {
+  height: var(--neo-control-bar-height);
+  flex-grow: 1;
   position: relative;
-  height: 50px;
+  border-radius: var(--neo-control-bar-border-radius);
+}
+
+media-control-bar [role="button"],
+media-control-bar [role="switch"] {
+  --media-button-icon-active-transform: scale(1.2);
+  --media-button-icon-transition: transform .2s ease;
+  color: rgb(var(--neo-white));
+  padding: 5px;
+  flex: 0 0 34px;
+}
+
+media-control-bar > :first-child {
+  border-top-left-radius: var(--neo-control-bar-border-radius);
+  border-bottom-left-radius: var(--neo-control-bar-border-radius);
+}
+
+media-control-bar > :last-child {
+  border-top-right-radius: var(--neo-control-bar-border-radius);
+  border-bottom-right-radius: var(--neo-control-bar-border-radius);
 }
 
 media-control-bar svg {
   fill: none;
-  transition: transform .2s ease;
-  transform: scale(1.001);
 }
 
 media-control-bar svg:active {
   transform: scale(1.2);
 }
 
-media-captions-button svg {
-  fill: var(--white);
-  transform: scale(0.97);
-}
-
 media-time-range {
-  width: 100%;
+/*  --media-control-background: transparent;
+  --media-control-hover-background: transparent;*/
+  --media-time-buffered-color: rgba(var(--neo-light-blue), .5);
+  --media-range-track-background-color: rgba(var(--neo-black), .8);
+  --media-range-track-border-radius: 1px;
+  --media-range-bar-color: rgba(var(--neo-blue), 1);
+  --media-range-thumb-background: none;
+  --media-range-thumb-width: 0px;
+  --media-range-thumb-height: 0px;
+  --media-range-track-height: 6px;
+  --media-range-track-transition: height .2s ease;
+/*  width: 100%;
   height: 10px;
   padding: 0;
   position: absolute;
-  bottom: 47px;
+  bottom: 47px;*/
   z-index: 99;
-  --media-control-background: transparent;
-  --media-control-hover-background: transparent;
-  --media-range-track-background-color: rgba(253, 244, 255, 0.5);
-  --media-range-bar-color: rgba(0, 171, 245, 0.8);
-  --media-range-thumb-background: var(--white);
-  --media-range-thumb-width: 0px;
-  --media-range-thumb-height: 0px;
-  --media-range-track-height: 4px;
-  --media-range-track-transition: height 0.2s ease;
-}
-
-media-time-range:hover {
-  --media-range-track-height: 4px;
-  --media-range-thumb-width: 10px;
-  --media-range-thumb-height: 10px;
+  height: var(--neo-control-bar-height);
 }
 
 media-playback-rate-range,
 media-volume-range {
-  height: 50px;
+  --media-time-buffered-color: rgba(var(--neo-light-blue), .5);
+  --media-range-track-background-color: rgba(var(--neo-black), .8);
+  --media-range-track-border-radius: 1px;
+  --media-range-bar-color: rgba(var(--neo-blue), 1);
+  --media-range-thumb-background: none;
+  --media-range-thumb-width: 0px;
+  --media-range-thumb-height: 0px;
+  --media-range-track-height: 6px;
+  height: var(--neo-control-bar-height);
 }
 
 .spacer {
+  background-color: var(--media-control-background, rgba(20, 20, 30, .7));
   flex-grow: 1;
   height: 100%;
-  background-color: var(--media-control-background, rgba(20, 20, 30, 0.7));
 }

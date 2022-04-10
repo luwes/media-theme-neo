@@ -15,26 +15,26 @@ const { MEDIA_PLAYBACK_RATE } = MediaUIAttributes;
 const DEFAULT_RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
 const DEFAULT_RATE = 1;
 
-const slowIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+const slowIcon = `<svg fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 11.55L8.45 9.5M6.4 20a9 9 0 1111.2 0H6.4z"/>
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
   <path stroke="currentColor" stroke-linecap="round" d="M9.505 7.5l-1.25-2.75m-1.75 5.5l-2.75-1.375m2.5 5.375l-2.875.625M14.5 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
 </svg>`;
 
-const normalIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+const normalIcon = `<svg fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.4 20a9 9 0 1111.2 0H6.4z"/>
   <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 9v4"/>
   <path stroke="currentColor" stroke-linecap="round" d="M9.5 7.5L8.25 4.75m-1.75 5.5L3.75 8.875m2.5 5.375l-2.875.625M14.495 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
 </svg>`;
 
-const fastIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+const fastIcon = `<svg fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.603 13.323L15.5 9.5M6.4 20a9 9 0 1111.2 0H6.4z"/>
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
   <path stroke="currentColor" stroke-linecap="round" d="M9.505 7.5l-1.25-2.75m-1.75 5.5l-2.75-1.375m2.5 5.375l-2.875.625M14.5 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
 </svg>`;
 
-const fasterIcon = `<svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+const fasterIcon = `<svg fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12.977L17 12M6.4 20a9 9 0 1111.2 0H6.4z"/>
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14a1 1 0 100-2 1 1 0 000 2z"/>
   <path stroke="currentColor" stroke-linecap="round" d="M9.505 7.5l-1.25-2.75m-1.75 5.5l-2.75-1.375m2.5 5.375l-2.875.625M14.5 7.5l1.25-2.75m1.75 5.5l2.75-1.375m-2.5 5.375l2.875.625"/>
@@ -45,6 +45,11 @@ slotTemplate.innerHTML = `
   <style>
   svg {
     fill: none;
+  }
+
+  /* TODO: maybe add to Media Chrome for icon transform on click */
+  svg:active, img:active, ::slotted(svg:active), ::slotted(img:active) {
+    transform: var(--media-button-icon-active-transform);
   }
 
   /* Default to Medium slot/icon. */

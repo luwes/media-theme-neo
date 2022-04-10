@@ -25,39 +25,38 @@ const template = html`
   <media-controller>
     <slot name="media" slot="media"></slot>
 
-    <div slot="centered-chrome">
+    <div class="neo-control-bar">
       <media-play-button>
         ${unsafeHTML(play)} ${unsafeHTML(pause)}
       </media-play-button>
-    </div>
 
-    <media-time-range></media-time-range>
-    <media-control-bar>
-      <media-time-display show-duration remaining></media-time-display>
-      <div class="spacer"></div>
-      <media-captions-button>
-        ${unsafeHTML(captionsOn)} ${unsafeHTML(captionsOff)}
-      </media-captions-button>
-      <media-control-strip>
-        <media-volume-range></media-volume-range>
-        <media-mute-button slot="open-button">
-          ${unsafeHTML(volumeHigh)} ${unsafeHTML(volumeMedium)}
-          ${unsafeHTML(volumeLow)} ${unsafeHTML(volumeOff)}
-        </media-mute-button>
-      </media-control-strip>
-      <media-control-strip>
-        <media-playback-rate-range></media-playback-rate-range>
-        <media-playback-rate-range-button slot="open-button">
-        </media-playback-rate-range-button>
-      </media-control-strip>
-      <media-pip-button>
-        ${unsafeHTML(pipEnter)} ${unsafeHTML(pipExit)}
-      </media-pip-button>
-      <media-airplay-button></media-airplay-button>
-      <media-fullscreen-button>
-        ${unsafeHTML(fullscreenEnter)} ${unsafeHTML(fullscreenExit)}
-      </media-fullscreen-button>
-    </media-control-bar>
+      <media-control-bar>
+        <media-time-display show-duration remaining></media-time-display>
+        <media-time-range></media-time-range>
+        <media-captions-button>
+          ${unsafeHTML(captionsOn)} ${unsafeHTML(captionsOff)}
+        </media-captions-button>
+        <media-control-strip>
+          <media-volume-range></media-volume-range>
+          <media-mute-button slot="open-button">
+            ${unsafeHTML(volumeHigh)} ${unsafeHTML(volumeMedium)}
+            ${unsafeHTML(volumeLow)} ${unsafeHTML(volumeOff)}
+          </media-mute-button>
+        </media-control-strip>
+        <media-control-strip>
+          <media-playback-rate-range></media-playback-rate-range>
+          <media-playback-rate-range-button slot="open-button">
+          </media-playback-rate-range-button>
+        </media-control-strip>
+        <media-pip-button>
+          ${unsafeHTML(pipEnter)} ${unsafeHTML(pipExit)}
+        </media-pip-button>
+        <media-airplay-button></media-airplay-button>
+        <media-fullscreen-button>
+          ${unsafeHTML(fullscreenEnter)} ${unsafeHTML(fullscreenExit)}
+        </media-fullscreen-button>
+      </media-control-bar>
+    </div>
   </media-controller>
 `;
 

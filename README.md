@@ -23,3 +23,5 @@ Created mostly for experimenting with new UI designs and elements.
   </video>
 </media-theme-neo>
 ```
+
+> Icons by [Tabler Icons](https://tabler-icons.io/) (with some tweaks)
