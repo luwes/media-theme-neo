@@ -4,16 +4,53 @@
   --neo-blue: 0, 171, 245;
   --neo-light-blue: 168, 220, 246;
   --neo-control-bar-height: 32px;
-  --neo-control-bar-border-radius: 2px;
+  --neo-control-bar-border-radius: .125rem;
+  --neo-play-button-border-radius: .25rem;
 
-  --media-control-background: rgba(var(--neo-black), .75);
-  --media-control-hover-background: rgba(var(--neo-black), .75);
+  --media-control-background: none;
+  --media-control-hover-background: none;
   --media-icon-color: rgb(var(--neo-white));
 
   color: rgb(var(--neo-white));
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
+}
+
+/* Add some Tailwind like utility classes for responsiveness. */
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.xs .xs\:hidden,
+.sm .sm\:hidden {
+  display: none;
+}
+
+.xs .xs\:block,
+.sm .sm\:block {
+  display: block;
+}
+
+.xs .xs\:inline-flex,
+.sm .sm\:inline-flex {
+  display: inline-flex;
+}
+
+.xs .xs\:rounded-b-sm {
+  border-bottom-left-radius: var(--neo-control-bar-border-radius);
+  border-bottom-right-radius: var(--neo-control-bar-border-radius);
+}
+
+.xs .xs\:rounded-t-sm,
+.sm .sm\:rounded-t-sm {
+  border-top-left-radius: var(--neo-control-bar-border-radius);
+  border-top-right-radius: var(--neo-control-bar-border-radius);
 }
 
 media-airplay-button[media-airplay-unavailable],
@@ -34,27 +71,25 @@ media-controller {
   overflow: visible;
   display: flex;
   align-items: end;
-  column-gap: 10px;
   width: 100%;
-  padding: 10px;
   box-sizing: border-box;
 }
 
-.neo-control-bar media-play-button {
-  --media-control-background: rgba(var(--neo-blue), .75);
-  --media-control-hover-background: rgba(var(--neo-blue), .9);
-  --media-button-icon-transform: scale(150%);
-  color: rgb(var(--neo-white));
-  flex: 0 0 65px;
-  aspect-ratio: 16 / 10;
-  border-radius: 4px;
+.xs .neo-control-bar {
+  column-gap: .625rem;
+  padding: .625rem;
+}
+
+.neo-play-bar {
+  flex-grow: 1;
 }
 
 media-control-bar {
+  background: rgba(var(--neo-black), .75);
   height: var(--neo-control-bar-height);
+  width: 100%;
   flex-grow: 1;
   position: relative;
-  border-radius: var(--neo-control-bar-border-radius);
 }
 
 media-control-bar [role="button"],
@@ -62,18 +97,8 @@ media-control-bar [role="switch"] {
   --media-button-icon-active-transform: scale(1.2);
   --media-button-icon-transition: transform .2s ease;
   color: rgb(var(--neo-white));
-  padding: 5px;
+  padding: .3125rem;
   flex: 0 0 34px;
-}
-
-media-control-bar > :first-child {
-  border-top-left-radius: var(--neo-control-bar-border-radius);
-  border-bottom-left-radius: var(--neo-control-bar-border-radius);
-}
-
-media-control-bar > :last-child {
-  border-top-right-radius: var(--neo-control-bar-border-radius);
-  border-bottom-right-radius: var(--neo-control-bar-border-radius);
 }
 
 media-control-bar svg {
@@ -84,9 +109,18 @@ media-control-bar svg:active {
   transform: scale(1.2);
 }
 
+media-play-button {
+  --media-control-background: rgba(var(--neo-blue), .75);
+  --media-control-hover-background: rgba(var(--neo-blue), .9);
+  border-radius: var(--neo-play-button-border-radius);
+  color: rgb(var(--neo-white));
+  width: 65px;
+  flex: 0 0 65px;
+  padding: .3125rem .625rem;
+  aspect-ratio: 16 / 10;
+}
+
 media-time-range {
-/*  --media-control-background: transparent;
-  --media-control-hover-background: transparent;*/
   --media-time-buffered-color: rgba(var(--neo-light-blue), .5);
   --media-range-track-background-color: rgba(var(--neo-black), .8);
   --media-range-track-border-radius: 1px;
@@ -96,12 +130,24 @@ media-time-range {
   --media-range-thumb-height: 0px;
   --media-range-track-height: 6px;
   --media-range-track-transition: height .2s ease;
-/*  width: 100%;
-  height: 10px;
-  padding: 0;
-  position: absolute;
-  bottom: 47px;*/
   z-index: 99;
+}
+
+media-time-range.mobile {
+  --media-control-background: transparent;
+  --media-control-hover-background: transparent;
+  --media-range-bar-color: rgba(var(--neo-blue), .75);
+  --media-time-buffered-color: rgba(var(--neo-blue), .4);
+  --media-range-track-background-color: rgba(var(--neo-black), .5);
+  --media-range-track-height: 5px;
+  --media-range-track-border-radius: var(--neo-control-bar-border-radius) var(--neo-control-bar-border-radius) 0 0;
+  height: 5px;
+  width: 100%;
+  padding: 0;
+}
+
+media-time-range.desktop {
+  flex-grow: 100000;
   height: var(--neo-control-bar-height);
 }
 
