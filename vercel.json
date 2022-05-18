@@ -1,5 +1,8 @@
 {
   "rewrites": [
     { "source": "/node_modules/:match*", "destination": "https://cdn.jsdelivr.net/npm/:match*" }
+  ],
+  "redirects": [
+    { "source": "/src/media-theme-neo.js", "destination": "/dist/media-theme-neo.js" }
   ]
 }
