@@ -1,5 +1,5 @@
 {
-  "redirects": [
+  "rewrites": [
     { "source": "/node_modules/:match*", "destination": "https://cdn.jsdelivr.net/npm/:match*" }
   ]
 }
