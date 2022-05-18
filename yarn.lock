@@ -245,22 +245,10 @@
   dependencies:
     "@floating-ui/core" "^0.5.0"
 
-"@github/jtml@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.npmjs.org/@github/jtml/-/jtml-0.4.1.tgz"
-  integrity sha512-BZ8Lp0Rr2YuhyIujJZ19snIWXWSgpkE6QOXH8pxHaIpv10ejJrN6uvG15M+ZdWCEK5LEsIIUvW95SCyRBeKXzw==
-  dependencies:
-    "@github/template-parts" "^0.3.0"
-
 "@github/template-parts@0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@github/template-parts/-/template-parts-0.5.3.tgz#5b2bcccfe0658d9a63549ae82488c0136d4ddb62"
   integrity sha512-Jw7gNq1zIwd17gTmtD/h+kTpSsue/fRGiqso42+A36AYMVlkXxmQ3UB+lInE8+4KPSxaOIvMMLD90LQjFlLz5A==
-
-"@github/template-parts@^0.3.0":
-  version "0.3.3"
-  resolved "https://registry.npmjs.org/@github/template-parts/-/template-parts-0.3.3.tgz"
-  integrity sha512-KGwQr+L14NvXJ03nALSACk3oKVHUBz3WDUahsq/44HdQQcscSGrsHZX+QEiS+B/CWAI7MFKyq+tolcsTM/rhQA==
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
@@ -2429,10 +2417,10 @@ media-chrome@0.6.3:
   resolved "https://registry.yarnpkg.com/media-chrome/-/media-chrome-0.6.3.tgz#bad94e27a347a6cb2b0bd15d28d8cf7e24c7cc02"
   integrity sha512-5OmHU10ZxgljClNRUUxTfh9FGpFDKRdkGHhRIUDTm4veGEhJA0ZruPHfux6K6lY6YFzMLfsgdeCk8sAWf2NY6g==
 
-media-show@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/media-show/-/media-show-0.0.2.tgz#418d140a8e9daa738efe83558320732cae2552ac"
-  integrity sha512-baRzIgHOHfBrmGFbn/G76E3d5QZ4ELwQ/ONdCO5P6aS3rF/Tt2IFihIwqO9YkmOx9dUqBD2ibvoV2tIueZy7oA==
+media-show@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/media-show/-/media-show-0.0.4.tgz#6cb5b7c28f97617cdb3ced616991cad88133ffad"
+  integrity sha512-AViBQqcdasAAemUHAhaWQNWPETmGt3pBTdgD6s2mKaY/cfKGGPhIAKDKRy4+uHijCTlRquhXaGHbdEe/XTNsAg==
   dependencies:
     "@github/template-parts" "0.5.3"
     "@shoelace-style/shoelace" "2.0.0-beta.73"
