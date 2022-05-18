@@ -1,48 +1,141 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Media Theme Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+      media="(prefers-color-scheme:light)"
+      href="/node_modules/@shoelace-style/shoelace/dist/themes/light.css"
+    />
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme:dark)"
+      href="/node_modules/@shoelace-style/shoelace/dist/themes/dark.css"
+      onload="document.documentElement.classList.add('sl-theme-dark');"
     />
     <style>
-      body {
-        min-height: 80%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+      :not(:defined) {
+        display: none;
       }
+
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--sl-font-sans);
+        font-size: var(--sl-font-size-medium);
+        font-weight: var(--sl-font-weight-normal);
+        letter-spacing: var(--sl-letter-spacing-normal);
+        background-color: var(--sl-color-neutral-0);
+        color: var(--sl-color-neutral-900);
+        line-height: var(--sl-line-height-normal);
+      }
+
+      a {
+        color: var(--sl-color-primary-600);
+      }
+
+      a:hover {
+        color: var(--sl-color-primary-700);
+      }
+
+      strong {
+        font-weight: var(--sl-font-weight-bold);
+      }
+
+      ms-sizes {
+        padding: .5rem;
+      }
+
+      ms-state {
+        padding: 1rem;
+      }
+
+      ms-input-list {
+        display: block;
+      }
+
+      media-prop,
+      media-checkbox {
+        display: block;
+      }
+
       media-theme-neo {
         aspect-ratio: 16 / 9;
       }
     </style>
-    <script type="module" src="./dist/media-theme-neo.js"></script>
+    <script type="module" src="./node_modules/media-show/src/index.js"></script>
+    <script type="module" src="./src/media-theme-neo.js"></script>
   </head>
   <body>
-    <h1>Media Theme Neo</h1>
-    <br />
-    <media-theme-neo>
-      <video
-        slot="media"
-        src="https://stream.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/high.mp4"
-        poster="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/thumbnail.jpg?time=56"
-        crossorigin
-      >
-        <track
-          label="thumbnails"
-          default
-          kind="metadata"
-          src="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/storyboard.vtt"
-        />
-        <track
-          label="English"
-          kind="captions"
-          srclang="en"
-          src="./vtt/en-cc.vtt"
-        />
-      </video>
-    </media-theme-neo>
+    <media-show>
+      <ms-split-panel id="x1" position="56" snap="56%">
+        <ms-sizes sizes="100% 65% 35% 25%" slot="start">
+          <template>
+            <media-theme-neo>
+              <video
+                slot="media"
+                src="{{src}}"
+                poster="{{poster}}"
+                preload="{{preload}}"
+                autoplay="{{autoplay}}"
+                muted="{{muted}}"
+                loop="{{loop}}"
+              ></video>
+            </media-theme-neo>
+          </template>
+          <media-theme-neo>
+            <video
+              slot="media"
+              src="https://stream.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/high.mp4"
+              poster="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/thumbnail.jpg?time=56"
+              crossorigin
+            >
+              <track
+                label="thumbnails"
+                default
+                kind="metadata"
+                src="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/storyboard.vtt"
+              />
+              <track
+                label="English"
+                kind="captions"
+                srclang="en"
+                src="./vtt/en-cc.vtt"
+              />
+            </video>
+          </media-theme-neo>
+        </ms-sizes>
+        <ms-split-panel id="x2" position="40" snap="40%" slot="end">
+          <div slot="start" style="padding: 1rem;">
+            <media-checkbox name="autoplay"></media-checkbox>
+            <media-checkbox name="muted"></media-checkbox>
+            <media-checkbox name="loop"></media-checkbox>
+            <media-checkbox name="controls"></media-checkbox>
+            <media-prop type="bool" name="paused"></media-prop>
+            <media-prop name="readyState"></media-prop>
+            <media-prop name="volume"></media-prop>
+            <media-prop type="buffered" name="buffered" observe="duration"></media-prop>
+            <media-prop type="time" name="duration"></media-prop>
+            <media-prop type="time" name="currentTime"></media-prop>
+            <media-prop type="bool" name="ended"></media-prop>
+            <media-prop type="quality" name="videoHeight" label="quality"></media-prop>
+            <media-prop name="playbackRate" label="rate"></media-prop>
+          </div>
+          <div slot="end" style="padding: 1rem;">
+            <ms-input-list src="/media-assets.json" placeholder="Enter new source URL"></ms-input-list>
+          </div>
+        </ms-split-panel>
+      </ms-split-panel>
+    </media-show>
   </body>
 </html>

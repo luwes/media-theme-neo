@@ -1,5 +1,5 @@
 import 'media-chrome';
-import { html, render, unsafeHTML } from '@github/jtml';
+import { html, render, unsafeHTML } from './html.js';
 import './media-control-strip.js';
 import './media-playback-rate-range-button.js';
 import './media-playback-rate-range.js';
@@ -45,14 +45,14 @@ const template = (props) => html`
           <media-captions-button>
             ${unsafeHTML(captionsOn)} ${unsafeHTML(captionsOff)}
           </media-captions-button>
-          <media-control-strip>
+          <media-control-strip vertical>
             <media-volume-range></media-volume-range>
             <media-mute-button slot="open-button">
               ${unsafeHTML(volumeHigh)} ${unsafeHTML(volumeMedium)}
               ${unsafeHTML(volumeLow)} ${unsafeHTML(volumeOff)}
             </media-mute-button>
           </media-control-strip>
-          <media-control-strip>
+          <media-control-strip vertical>
             <media-playback-rate-range></media-playback-rate-range>
             <media-playback-rate-range-button slot="open-button">
             </media-playback-rate-range-button>
@@ -90,6 +90,11 @@ class MediaThemeNeo extends HTMLElement {
     }), this.shadowRoot);
   }
 
+  hotReplacedCallback() {
+    console.log('Hot cakes incoming!');
+    this.render();
+  }
+
   get breakpoints() {
     return { xs: 396, sm: 484, md: 576, lg: 768, xl: 960 };
   }
@@ -105,4 +110,4 @@ if (!customElements.get('media-theme-neo')) {
   customElements.define('media-theme-neo', MediaThemeNeo);
 }
 
-export default MediaThemeNeo;
+export { MediaThemeNeo };
