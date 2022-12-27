@@ -110,6 +110,35 @@
         height: 100%;
       }
 
+      .neo-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 1px;
+        margin: .625rem;
+      }
+
+      .neo-title,
+      .neo-byline {
+        display: inline-block;
+        background: rgba(var(--neo-black), .75);
+        margin: 0;
+        padding: .15rem .2rem;
+        line-height: 1;
+        font-size: .8rem;
+        font-weight: normal;
+      }
+
+      .neo-title {
+        color: rgba(var(--neo-blue), 1);
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+
+      .neo-byline span {
+        color: rgba(var(--neo-blue), 1);
+      }
+
       .neo-control-bar {
         position: relative;
         overflow: visible;
@@ -293,6 +322,11 @@
     <media-controller>
       <slot name="media" slot="media"></slot>
 
+      <div slot="top-chrome" class="neo-header">
+        <h1 class="neo-title">{{title}}</h1>
+        <h2 class="neo-byline">from <span>{{username}}</span></h2>
+      </div>
+
       <div slot="centered-chrome" class="xs:hidden">
         <media-play-button>
           <svg slot="play" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
@@ -450,8 +484,8 @@
 
   </template>
 
-  <media-theme template="media-theme-neo">
-    <video slot="media" is="castable-video"
+  <media-theme template="media-theme-neo" title="Big Buck Bunny" username="Blender Foundation">
+    <video muted slot="media" is="castable-video"
       src="https://stream.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/high.mp4"
       poster="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/thumbnail.jpg?time=56" crossorigin>
       <track label="thumbnails" default kind="metadata"
