@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Media Theme Neo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/media-chrome@0.16/+esm"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/media-chrome@0.16/dist/media-theme-element.js/+esm"></script>
+  <script type="module" src="./script.js"></script>
+</head>
+
+<body>
+
+  <template id="media-theme-neo">
+    <style>
+      :host {
+        --neo-black: 23, 35, 34;
+        --neo-white: 253, 244, 255;
+        --neo-gray: 100, 100, 100;
+        --neo-blue: 0, 171, 245;
+        --neo-light-blue: 168, 220, 246;
+        --neo-dark-blue: 0, 154, 221;
+        --neo-control-bar-height: 32px;
+        --neo-control-bar-border-radius: .125rem;
+        --neo-play-button-border-radius: .25rem;
+
+        --media-control-background: none;
+        --media-control-hover-background: none;
+        --media-icon-color: rgb(var(--neo-white));
+        --media-control-strip-padding: 5px;
+        --media-control-strip-background: rgba(var(--neo-black), .75);
+        --media-control-strip-border-radius: 0 var(--neo-control-bar-border-radius) var(--neo-control-bar-border-radius) 0;
+
+        color: rgb(var(--neo-white));
+        display: block;
+        width: 100%;
+        line-height: 0;
+        aspect-ratio: 16 / 9;
+        container: media-theme-neo / inline-size;
+      }
+
+      /*
+    Add some Tailwind like utility classes for responsiveness.
+    xs: 396, sm: 484, md: 576, lg: 768, xl: 960
+  */
+
+      .hidden {
+        display: none;
+      }
+
+      .block {
+        display: block;
+      }
+
+      @container (inline-size >=396px) {
+        .xs\:hidden {
+          display: none;
+        }
+
+        .xs\:block {
+          display: block;
+        }
+
+        .xs\:inline-flex {
+          display: inline-flex;
+        }
+
+        .xs\:rounded-b-sm {
+          border-bottom-left-radius: var(--neo-control-bar-border-radius);
+          border-bottom-right-radius: var(--neo-control-bar-border-radius);
+        }
+
+        .xs\:rounded-t-sm {
+          border-top-left-radius: var(--neo-control-bar-border-radius);
+          border-top-right-radius: var(--neo-control-bar-border-radius);
+        }
+      }
+
+      @container (inline-size >=484px) {
+        .sm\:hidden {
+          display: none;
+        }
+
+        .sm\:block {
+          display: block;
+        }
+
+        .sm\:inline-flex {
+          display: inline-flex;
+        }
+
+        .sm\:rounded-t-sm {
+          border-top-left-radius: var(--neo-control-bar-border-radius);
+          border-top-right-radius: var(--neo-control-bar-border-radius);
+        }
+      }
+
+      media-airplay-button[media-airplay-unavailable],
+      media-volume-range[media-volume-unavailable],
+      media-pip-button[media-pip-unavailable],
+      media-cast-button[media-cast-unavailable] {
+        display: none;
+      }
+
+      media-controller {
+        width: 100%;
+        height: 100%;
+      }
+
+      .neo-control-bar {
+        position: relative;
+        overflow: visible;
+        display: flex;
+        align-items: end;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      @container (inline-size >=396px) {
+        .neo-control-bar {
+          column-gap: .625rem;
+          padding: .625rem;
+        }
+      }
+
+      .neo-play-bar {
+        flex-grow: 1;
+      }
+
+      media-control-bar {
+        background: rgba(var(--neo-black), .75);
+        height: var(--neo-control-bar-height);
+        width: 100%;
+        flex-grow: 1;
+        position: relative;
+      }
+
+      media-control-bar [role="button"],
+      media-control-bar [role="switch"] {
+        --media-button-icon-active-transform: scale(1.2);
+        --media-button-icon-transition: transform .2s ease;
+        color: rgb(var(--neo-white));
+        padding: .3125rem .35rem;
+      }
+
+      media-control-bar svg {
+        fill: none;
+      }
+
+      media-control-bar svg:active {
+        transform: scale(1.2);
+      }
+
+      media-play-button {
+        --media-control-background: rgba(var(--neo-black), .75);
+        --media-control-hover-background: rgba(var(--neo-blue), 1);
+        --media-button-icon-height: 100%;
+        border-radius: var(--neo-play-button-border-radius);
+        color: rgb(var(--neo-white));
+        width: 65px;
+        flex: 0 0 65px;
+        padding: .3125rem .625rem;
+        aspect-ratio: 16 / 10;
+      }
+
+      media-play-button:active {
+        --media-control-hover-background: rgba(var(--neo-dark-blue), .9);
+      }
+
+      media-time-range {
+        --media-time-buffered-color: rgba(var(--neo-blue), .3);
+        --media-range-track-background: rgba(var(--neo-black), .5);
+        --media-range-track-border-radius: 0;
+        --media-range-bar-color: rgba(var(--neo-blue), 1);
+        --media-range-thumb-background: none;
+        --media-range-thumb-width: 0px;
+        --media-range-thumb-height: 0px;
+        --media-range-track-height: 10px;
+        --media-range-track-transition: height .2s ease;
+        --media-preview-thumbnail-border-radius: 2px;
+        --media-preview-thumbnail-border: 4px solid rgba(var(--neo-black), .85);
+        --media-preview-time-margin: 0;
+        --media-preview-time-background: rgba(var(--neo-black), 1);
+        z-index: 10;
+      }
+
+      media-preview-thumbnail {
+        max-width: 213px;
+        max-height: 200px;
+      }
+
+      media-time-range [slot="preview"] {
+        position: relative;
+        bottom: -7px;
+      }
+
+      media-preview-time-display,
+      media-current-time-display {
+        --media-control-background: rgba(var(--neo-white), 1);
+        padding: 2px 4px;
+        line-height: normal;
+        color: rgba(var(--neo-black), 1);
+        font-family: Verdana, sans-serif;
+        font-size: 10px;
+        box-shadow: rgba(0, 0, 0, 0.7) 1px 1px 0px 0px;
+        position: relative;
+        bottom: -7px;
+        z-index: 20;
+      }
+
+      media-preview-time-display {
+        margin-top: 5px;
+        min-width: auto;
+        border-radius: 0;
+        --media-control-background: rgba(var(--neo-black), 1);
+        color: rgba(var(--neo-white), 1);
+      }
+
+      media-preview-time-display::before,
+      media-preview-time-display::after,
+      media-current-time-display::before,
+      media-current-time-display::after {
+        content: "";
+        border-left: 0.3em solid transparent;
+        border-right: 0.3em solid transparent;
+        border-top: 0.3em solid rgba(var(--neo-white), 1);
+        position: absolute;
+        left: 50%;
+        bottom: -0.3em;
+        margin-left: -0.3em;
+      }
+
+      media-preview-time-display::after {
+        border-top: 0.3em solid rgba(var(--neo-black), 1);
+      }
+
+      media-preview-time-display::before,
+      media-current-time-display::before {
+        border-top-color: rgba(0, 0, 0, .7);
+        margin-left: -0.2em;
+        bottom: -0.4em;
+      }
+
+      media-time-range.mobile {
+        --media-range-padding: 0;
+        --media-box-padding-left: 2px;
+        --media-box-padding-right: 2px;
+        --media-control-background: transparent;
+        --media-control-hover-background: transparent;
+        --media-range-bar-color: rgba(var(--neo-blue), 1);
+        --media-time-buffered-color: rgba(var(--neo-blue), .4);
+        --media-range-track-background: rgba(var(--neo-black), .5);
+        --media-range-track-height: 5px;
+        --media-range-track-border-radius: var(--neo-control-bar-border-radius) var(--neo-control-bar-border-radius) 0 0;
+        height: 5px;
+        width: 100%;
+        padding: 0;
+      }
+
+      media-time-range.mobile media-preview-time-display,
+      media-time-range.mobile media-current-time-display {
+        bottom: 3px;
+      }
+
+      media-time-range.desktop {
+        flex-grow: 100000;
+        height: var(--neo-control-bar-height);
+      }
+
+      media-playback-rate-range,
+      media-volume-range {
+        --media-time-buffered-color: rgba(var(--neo-light-blue), .5);
+        --media-range-track-background-color: rgba(var(--neo-black), .8);
+        --media-range-track-border-radius: 1px;
+        --media-range-bar-color: rgba(var(--neo-blue), 1);
+        --media-range-thumb-background: none;
+        --media-range-thumb-width: 0px;
+        --media-range-thumb-height: 0px;
+        --media-range-track-height: 6px;
+        height: var(--neo-control-bar-height);
+      }
+
+      .spacer {
+        background-color: var(--media-control-background, rgba(20, 20, 30, .7));
+        flex-grow: 1;
+        height: 100%;
+      }
+    </style>
+
+    <media-controller>
+      <slot name="media" slot="media"></slot>
+
+      <div slot="centered-chrome" class="xs:hidden">
+        <media-play-button>
+          <svg slot="play" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+            fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M7 4v16l13 -8z"></path>
+          </svg>
+          <svg slot="pause" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+            fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <rect x="6" y="5" width="4" height="14" rx="0"></rect>
+            <rect x="14" y="5" width="4" height="14" rx="0"></rect>
+          </svg>
+        </media-play-button>
+      </div>
+
+      <div class="neo-control-bar" id="neo-bounds">
+        <media-play-button class="hidden xs:block">
+          <svg slot="play" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+            fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M7 4v16l13 -8z"></path>
+          </svg>
+          <svg slot="pause" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
+            fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <rect x="6" y="5" width="4" height="14" rx="0"></rect>
+            <rect x="14" y="5" width="4" height="14" rx="0"></rect>
+          </svg>
+        </media-play-button>
+
+        <div class="neo-play-bar">
+          <media-time-range class="mobile sm:hidden xs:rounded-t-sm">
+            <media-preview-time-display slot="preview"></media-preview-time-display>
+            <media-current-time-display slot="current"></media-current-time-display>
+          </media-time-range>
+          <media-control-bar class="xs:rounded-b-sm sm:rounded-t-sm">
+            <media-time-range class="desktop hidden sm:block" bounds="neo-bounds">
+              <media-preview-thumbnail slot="preview"></media-preview-thumbnail>
+              <media-preview-time-display slot="preview"></media-preview-time-display>
+              <media-current-time-display slot="current"></media-current-time-display>
+            </media-time-range>
+            <div class="spacer"></div>
+            <media-captions-button default-showing>
+              <svg slot="on" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd"
+                  d="M2 8a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4h-.532l-2.2 2.64a1 1 0 0 1-1.536 0l-2.2-2.64H5.999A4 4 0 0 1 2 15V8Zm13.57.183a3.333 3.333 0 0 1 2.338.826.82.82 0 0 1-1.083 1.232 1.693 1.693 0 0 0-2.336.097 1.674 1.674 0 0 0 0 2.324 1.692 1.692 0 0 0 2.336.097.82.82 0 0 1 1.083 1.232 3.333 3.333 0 0 1-4.6-.191 3.314 3.314 0 0 1 0-4.6m2.261-1.017c-.856.035-1.666.4-2.261 1.017Zm-6.7-.005a3.338 3.338 0 0 1 2.342.828.825.825 0 0 1-1.089 1.239 1.688 1.688 0 0 0-2.33.097 1.669 1.669 0 0 0 0 2.316 1.688 1.688 0 0 0 2.33.097.825.825 0 1 1 1.09 1.24 3.338 3.338 0 0 1-4.608-.192 3.319 3.319 0 0 1 0-4.606m2.265-1.02a3.347 3.347 0 0 0-2.265 1.02Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg slot="off" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+                  d="M17.367 9.625a2.513 2.513 0 0 0-3.469.144 2.494 2.494 0 0 0 0 3.461 2.513 2.513 0 0 0 3.469.145m-6.7-3.75a2.513 2.513 0 0 0-3.469.144 2.494 2.494 0 0 0 0 3.461 2.512 2.512 0 0 0 3.469.145" />
+                <path fill="currentColor"
+                  d="M17 18v-1h-.468l-.3.36L17 18Zm-5 0 .768-.64-.3-.36H12v1Zm2.5 3-.768.64a1 1 0 0 0 1.536 0L14.5 21ZM6 6h12V4H6v2Zm14 2v7h2V8h-2ZM4 15V8H2v7h2Zm14 2h-1v2h1v-2Zm-6 0H6v2h6v-2Zm4.232.36-2.5 3 1.536 1.28 2.5-3-1.536-1.28Zm-.964 3-2.5-3-1.536 1.28 2.5 3 1.536-1.28ZM2 15a4 4 0 0 0 4 4v-2a2 2 0 0 1-2-2H2Zm18 0a2 2 0 0 1-2 2v2a4 4 0 0 0 4-4h-2Zm-2-9a2 2 0 0 1 2 2h2a4 4 0 0 0-4-4v2ZM6 4a4 4 0 0 0-4 4h2a2 2 0 0 1 2-2V4Z" />
+              </svg>
+            </media-captions-button>
+            <media-control-strip vertical>
+              <media-volume-range></media-volume-range>
+              <media-mute-button slot="open-button">
+                <svg slot="high" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
+                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M15 8a5 5 0 0 1 0 8"></path>
+                  <path d="M17.7 5a9 9 0 0 1 0 14"></path>
+                  <path
+                    d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a0.8 .8 0 0 1 1.5 .5v14a0.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"
+                    fill="currentColor"></path>
+                </svg>
+                <svg slot="medium" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
+                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M15 8a5 5 0 0 1 0 8"></path>
+                  <path d="M17.7 5a9 9 0 0 1 0 14"></path>
+                  <path
+                    d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a0.8 .8 0 0 1 1.5 .5v14a0.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"
+                    fill="currentColor"></path>
+                </svg>
+                <svg slot="low" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
+                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M15 8a5 5 0 0 1 0 8"></path>
+                  <path
+                    d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a0.8 .8 0 0 1 1.5 .5v14a0.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"
+                    fill="currentColor"></path>
+                </svg>
+                <svg slot="off" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
+                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path
+                    d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a0.8 .8 0 0 1 1.5 .5v14a0.8 .8 0 0 1 -1.5 .5l-3.5 -4.5">
+                  </path>
+                  <path d="M16 10l4 4m0 -4l-4 4"></path>
+                </svg>
+              </media-mute-button>
+            </media-control-strip>
+            <media-control-strip vertical>
+              <media-playback-rate-range></media-playback-rate-range>
+              <media-playback-rate-range-button slot="open-button">
+              </media-playback-rate-range-button>
+            </media-control-strip>
+            <media-pip-button>
+              <svg slot="enter" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v4"></path>
+                <rect x="14" y="14" width="7" height="5" rx="1" fill="currentColor"></rect>
+                <line x1="7" y1="9" x2="11" y2="13"></line>
+                <path d="M8 13h3v-3"></path>
+              </svg>
+              <svg slot="exit" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v4"></path>
+                <rect x="14" y="14" width="7" height="5" rx="1" fill="currentColor"></rect>
+                <line x1="7" y1="9" x2="11" y2="13"></line>
+                <path d="M7 12v-3h3"></path>
+              </svg>
+            </media-pip-button>
+            <media-airplay-button></media-airplay-button>
+            <media-cast-button>
+              <svg slot="enter" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <line x1="3" y1="19" x2="3.01" y2="19"></line>
+                <path d="M7 19a4 4 0 0 0 -4 -4"></path>
+                <path d="M11 19a8 8 0 0 0 -8 -8"></path>
+                <path d="M15 19h3a3 3 0 0 0 3 -3v-8a3 3 0 0 0 -3 -3h-12a3 3 0 0 0 -2.8 2"></path>
+              </svg>
+              <svg slot="exit" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M3 19h.01"></path>
+                <path d="M7 19a4 4 0 0 0 -4 -4"></path>
+                <path d="M11 19a8 8 0 0 0 -8 -8"></path>
+                <path
+                  d="M15 19h3a3 3 0 0 0 .875 -.13m1.997 -2.002a3 3 0 0 0 .128 -.868v-8a3 3 0 0 0 -3 -3h-9m-3.865 .136a3 3 0 0 0 -1.935 1.864">
+                </path>
+                <path d="M3 3l18 18"></path>
+              </svg>
+            </media-cast-button>
+            <media-fullscreen-button>
+              <svg slot="enter" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 5h4v4M15 9l4-4M9 19H5v-4M5 19l4-4M15 19h4v-4M15 15l4 4M9 5H5v4M5 5l4 4" />
+              </svg>
+              <svg slot="exit" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 9h4V5M4.5 4.5 9 9M5 15h4v4M4.5 19.5 9 15M19 9h-4V5M15 9l4.5-4.5M19 15h-4v4M15 15l4.5 4.5" />
+              </svg>
+            </media-fullscreen-button>
+          </media-control-bar>
+        </div>
+      </div>
+    </media-controller>
+
+  </template>
+
+  <media-theme template="media-theme-neo">
+    <video slot="media" is="castable-video"
+      src="https://stream.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/high.mp4"
+      poster="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/thumbnail.jpg?time=56" crossorigin>
+      <track label="thumbnails" default kind="metadata"
+        src="https://image.mux.com/O6LdRc0112FEJXH00bGsN9Q31yu5EIVHTgjTKRkKtEq1k/storyboard.vtt" />
+      <track label="English" kind="captions" srclang="en" src="./en-cc.vtt" />
+    </video>
+  </media-theme>
+
+  <!--
+  This script places a badge on your repl's full-browser view back to your repl's cover
+  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
+  teal, blue, blurple, magenta, pink!
+  -->
+  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 10px auto;
+  min-height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+media-theme {
+  display: block;         /* expands the container if preload=none */
+  aspect-ratio: 16 / 9;   /* set container aspect ratio if preload=none */
+  width: 100%;
+  line-height: 0;
+}
+
+video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
