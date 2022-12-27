@@ -1,6 +1,6 @@
 # Media Theme Neo
 
-The Neo theme for [Media Chrome](https://github.com/muxinc/media-chrome).  
+The Neo theme for [Media Chrome](https://github.com/muxinc/media-chrome). 
 A Nudge to the classic Vimeo player design.  
 Created mostly for experimenting with new UI designs and elements.
 
@@ -8,3 +8,5 @@ Created mostly for experimenting with new UI designs and elements.
 
 
 > Icons by [Tabler Icons](https://tabler-icons.io/) (with some tweaks)
+
+[![Run on Repl.it](https://repl.it/badge/github/luwes/media-theme-neo)](https://repl.it/github/luwes/media-theme-neo)
